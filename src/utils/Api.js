@@ -107,4 +107,6 @@ class Api {
     }).then(this._getResponseData);
   }
 }
-export const api = new Api(ApiData);
+
+const api = new Api(ApiData);
+export default api;
