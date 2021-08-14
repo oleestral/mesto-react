@@ -19,7 +19,11 @@ class Api {
         authorization: this._token,
         "Content-type": "application/json",
       },
-    }).then(this._getResponseData);
+    })
+      .then(this._getResponseData)
+      .catch((err) => {
+        console.log(err);
+      });
   }
   //edit user profile
   editUserProfile(name, about) {
@@ -33,7 +37,11 @@ class Api {
         name: name,
         about: about,
       }),
-    }).then(this._getResponseData);
+    })
+      .then(this._getResponseData)
+      .catch((err) => {
+        console.log(err);
+      });
   }
   //get Initial Cards
   getInitialCards() {
@@ -42,7 +50,11 @@ class Api {
       headers: {
         authorization: this._token,
       },
-    }).then(this._getResponseData);
+    })
+      .then(this._getResponseData)
+      .catch((err) => {
+        console.log(err);
+      });
   }
   //add user's cards
   addUserCards(name, link) {
@@ -56,7 +68,11 @@ class Api {
         name: name,
         link: link,
       }),
-    }).then(this._getResponseData);
+    })
+      .then(this._getResponseData)
+      .catch((err) => {
+        console.log(err);
+      });
   }
   //remove user's card
   removeUserCards(id) {
@@ -65,7 +81,11 @@ class Api {
       headers: {
         authorization: this._token,
       },
-    }).then(this._getResponseData);
+    })
+      .then(this._getResponseData)
+      .catch((err) => {
+        console.log(err);
+      });
   }
   //like post
   like(id) {
@@ -74,7 +94,11 @@ class Api {
       headers: {
         authorization: this._token,
       },
-    }).then(this._getResponseData);
+    })
+      .then(this._getResponseData)
+      .catch((err) => {
+        console.log(err);
+      });
   }
   //remove like
   removeLike(id) {
@@ -83,7 +107,11 @@ class Api {
       headers: {
         authorization: this._token,
       },
-    }).then(this._getResponseData);
+    })
+      .then(this._getResponseData)
+      .catch((err) => {
+        console.log(err);
+      });
   }
   //update user avatar
   updateUserAvatar(info) {
@@ -96,15 +124,24 @@ class Api {
       body: JSON.stringify({
         avatar: info.avatar,
       }),
-    }).then(this._getResponseData);
+    })
+      .then(this._getResponseData)
+      .catch((err) => {
+        console.log(err);
+      });
   }
-  changeLikeCardStatus(id, method) {
+  changeLikeCardStatus(id, isLiked) {
+    const method = isLiked ? "DELETE" : "PUT";
     return fetch(`${this._address}/cards/likes/${id}`, {
-      method: `${method}`,
+      method: method,
       headers: {
         authorization: this._token,
       },
-    }).then(this._getResponseData);
+    })
+      .then(this._getResponseData)
+      .catch((err) => {
+        console.log(err);
+      });
   }
 }
 

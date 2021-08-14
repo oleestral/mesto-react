@@ -21,30 +21,17 @@ function App() {
   const [imageOpened, setImageOpened] = React.useState(false);
   const [cards, setCards] = React.useState([]);
 
-  // user data
+  // user data & initial cards
   React.useEffect(() => {
-    api
-      .getUserInfo()
-      .then((userData) => {
-        setCurrentUser(userData);
+    Promise.all([api.getUserInfo(), api.getInitialCards()])
+      .then(([info, card]) => {
+        setCurrentUser(info);
+        setCards(card);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
-
-  // initial cards
-  React.useEffect(() => {
-    api
-      .getInitialCards()
-      .then((cards) => {
-        setCards(cards);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
   //delete card
   function handleDeleteClick(card) {
     api
@@ -121,11 +108,8 @@ function App() {
   function handleCardLike(card) {
     // Снова проверяем, есть ли уже лайк на этой карточке
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
-
-    const method = isLiked ? "DELETE" : "PUT";
-
     // Отправляем запрос в API и получаем обновлённые данные карточки
-    api.changeLikeCardStatus(card._id, method).then((newCard) => {
+    api.changeLikeCardStatus(card._id, isLiked).then((newCard) => {
       setCards((state) => state.map((c) => (c._id === card._id ? newCard : c)));
     });
   }
